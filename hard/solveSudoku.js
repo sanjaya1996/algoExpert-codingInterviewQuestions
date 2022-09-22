@@ -1,21 +1,10 @@
-const BOARD = [
-  [7, 8, 0, 4, 0, 0, 1, 2, 0],
-  [6, 0, 0, 0, 7, 5, 0, 0, 9],
-  [0, 0, 0, 6, 0, 1, 0, 7, 8],
-  [0, 0, 7, 0, 4, 0, 2, 6, 0],
-  [0, 0, 1, 0, 5, 0, 9, 3, 0],
-  [9, 0, 4, 0, 6, 0, 0, 0, 5],
-  [0, 7, 0, 3, 0, 0, 0, 1, 2],
-  [1, 2, 0, 0, 0, 7, 4, 0, 0],
-  [0, 4, 9, 2, 0, 6, 0, 0, 7],
-];
-
 function solveSudoku(board) {
-  solvePartialSudoku(0, 0, board);
+  // Write your code here.
+  solveSudokuPartial(board, 0, 0);
   return board;
 }
 
-function solvePartialSudoku(row, col, board) {
+function solveSudokuPartial(board, row, col) {
   let currentRow = row;
   let currentCol = col;
 
@@ -27,17 +16,17 @@ function solvePartialSudoku(row, col, board) {
   }
 
   if (board[currentRow][currentCol] === 0) {
-    return trialDigits(board, currentRow, currentCol);
+    return trialAllDigits(board, currentRow, currentCol);
   }
 
-  return solvePartialSudoku(currentRow, currentCol + 1, board);
+  return solveSudokuPartial(board, currentRow, currentCol + 1);
 }
 
-function trialDigits(board, row, col) {
+function trialAllDigits(board, row, col) {
   for (let digit = 1; digit < 10; digit++) {
-    if (isValidAtPosition(board, row, col, digit)) {
+    if (isNumberValidAtPosition(board, row, col, digit)) {
       board[row][col] = digit;
-      if (solvePartialSudoku(row, col + 1, board)) return true;
+      if (solveSudokuPartial(board, row, col + 1)) return true;
     }
   }
 
@@ -45,23 +34,23 @@ function trialDigits(board, row, col) {
   return false;
 }
 
-function isValidAtPosition(board, row, col, value) {
-  return (
-    !isNumberInRow(board, row, value) &&
-    !isNumberInCol(board, col, value) &&
-    !isNumberInBox(board, row, col, value)
+function isNumberValidAtPosition(board, row, col, value) {
+  return !(
+    hasNumberInRow(board, row, value) ||
+    hasNumberInCol(board, col, value) ||
+    hasNumberInBox(board, row, col, value)
   );
 }
 
-function isNumberInRow(board, row, value) {
+function hasNumberInRow(board, row, value) {
   return board[row].includes(value);
 }
 
-function isNumberInCol(board, col, value) {
+function hasNumberInCol(board, col, value) {
   return board.map((r) => r[col]).includes(value);
 }
 
-function isNumberInBox(board, row, col, value) {
+function hasNumberInBox(board, row, col, value) {
   const rowStart = Math.floor(row / 3) * 3;
   const colStart = Math.floor(col / 3) * 3;
 
@@ -70,12 +59,11 @@ function isNumberInBox(board, row, col, value) {
       const rowToCheck = rowStart + rowIdx;
       const colToCheck = colStart + colIdx;
       const currentValue = board[rowToCheck][colToCheck];
-
       if (currentValue === value) return true;
     }
   }
 
   return false;
 }
-
-console.log(solveSudoku(BOARD));
+// Do not edit the line below.
+exports.solveSudoku = solveSudoku;
