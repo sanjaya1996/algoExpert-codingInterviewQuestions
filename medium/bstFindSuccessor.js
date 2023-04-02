@@ -8,11 +8,10 @@ class BinaryTree {
   }
 }
 
-// SOLUTION 1: Time Complexity = O(n) and Space complexity = O(n), where n is the
+// SOLUTION 1: O(n) Time | O(n) Space , where n is the
 // total number of nodes in the tree
 
 function findSuccessor(tree, node) {
-  // Write your code here.
   if (!node) {
     return null;
   }
@@ -40,4 +39,53 @@ function inorderTraversal(tree, inorderArray) {
   inorderTraversal(tree.left, inorderArray);
   inorderArray.push(tree);
   inorderTraversal(tree.right, inorderArray);
+}
+
+// .............................................................................
+
+// SOLUTION 2 (Optimal solution)
+// O(h) time, O(1) space, where h is the height of the tree
+
+// This is an input class. Do not edit.
+class BinaryTree {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+    this.parent = null;
+  }
+}
+
+function findSuccessor2(tree, node) {
+  // Write your code here.
+  if (!(tree && node)) {
+    return null;
+  }
+
+  if (node.right) {
+    return findLeftMostChild(node.right);
+  } else {
+    return findRightMostParent(node);
+  }
+}
+
+function findLeftMostChild(node) {
+  if (!node.left) {
+    return node;
+  }
+
+  return findLeftMostChild(node.left);
+}
+
+function findRightMostParent(node) {
+  const parentNode = node.parent;
+  if (!parentNode) {
+    return null;
+  }
+
+  if (parentNode.left && parentNode.left.value === node.value) {
+    return parentNode;
+  }
+
+  return findRightMostParent(parentNode);
 }
