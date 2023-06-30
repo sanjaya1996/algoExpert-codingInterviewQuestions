@@ -1,8 +1,4 @@
 // ....................................SOLUTION 1 (Less Optimal) .........................................
-// Do not edit the class below except for
-// the constructor and the createSet, find,
-// and union methods. Feel free to add new
-// properties and methods to the class.
 class UnionFind {
   constructor() {
     this.parents = {};
@@ -40,10 +36,6 @@ class UnionFind {
 }
 
 // ....................................SOLUTION 2 (More Optimal) .........................................
-// Do not edit the class below except for
-// the constructor and the createSet, find,
-// and union methods. Feel free to add new
-// properties and methods to the class.
 class UnionFind {
   constructor() {
     this.parents = {};
@@ -93,10 +85,6 @@ class UnionFind {
 }
 
 // ....................................SOLUTION 3 (Most Optimal - Path compression technique) .........................................
-// Do not edit the class below except for
-// the constructor and the createSet, find,
-// and union methods. Feel free to add new
-// properties and methods to the class.
 class UnionFind {
   constructor() {
     this.parents = {};
